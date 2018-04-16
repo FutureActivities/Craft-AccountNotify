@@ -3,6 +3,9 @@ namespace Craft;
 
 class AccountNotifyService extends BaseApplicationComponent
 {
+    /**
+     * Check if a user account has had changes
+     */
     public function check($user)
     {
         // Get the user before these changes
@@ -17,10 +20,16 @@ class AccountNotifyService extends BaseApplicationComponent
         // Get list of fields that have changed
         $diff = $this->diff($original, $user, $excludes);
         
+        if (empty($diff))
+            return;
+        
         // Send the email
         craft()->email->sendEmailByKey($original, 'user_notify', ['diff' => $diff]);
     }
     
+    /**
+     * Gets the differences between the original user object and the new one
+     */
     protected function diff($original, $user, $excludes = [])
     {
         $result = [];
@@ -37,19 +46,5 @@ class AccountNotifyService extends BaseApplicationComponent
         }
         
         return $result;
-    }
-    
-    protected function send($to, $subject, $body)
-    {
-        $email = new EmailModel();
-        $email->toEmail = $to;
-        $email->subject = $subject;
-        $email->body = $body;
-        
-        try {
-            craft()->email->sendEmail($email);
-        } catch (\Exception $e) {
-            return false;
-        }
     }
 }
