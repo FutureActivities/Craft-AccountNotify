@@ -1,0 +1,14 @@
+{
+    "name": "futureactivities/craft-accountnotify",
+    "description": "Notifies users when their account details are updated, such as email, password, etc.",
+    "type": "craft-plugin",
+    "authors": [
+        {
+            "name": "Paul Blundell",
+            "email": "paul.blundell@nzime.com"
+        }
+    ],
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}
