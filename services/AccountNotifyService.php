@@ -12,6 +12,9 @@ class AccountNotifyService extends BaseApplicationComponent
         $userRecord = UserRecord::model()->findById($user->id);
         $original = UserModel::populateModel($userRecord);
         
+        if (!$original)
+            return;
+        
         // Exclude certain fields
         $excludes = ['admin'];
         if ($useEmailAsUsername = craft()->config->get('useEmailAsUsername'))
